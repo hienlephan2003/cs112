@@ -1,0 +1,48 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[pdftex]{graphicx} %for embedding images
+\usepackage[utf8]{vietnam}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{adjustbox}
+\usepackage{commath, amsmath}
+\usepackage[ruled]{algorithm2e}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz,tkz-tab}
+\usetikzlibrary{matrix} 
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{changepage}
+\usepackage{setspace}
+\usepackage{booktabs}
+\renewcommand\thesubsection{\alph{subsection})}
+
+\usepackage{siunitx}
+\sisetup{output-exponent-marker=\ensuremath{\mathrm{e}}}
+
+% Beginning document here
+   
+\begin{document}
+\input{tex/title}
+\renewcommand{\thesection}{HW\#03:}
+\section{Big-O notation}
+\renewcommand{\thesubsection}{Bài tập \arabic{subsection}:}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+\input{tex/bigO1}
+\input{tex/bigO2}
+\input{tex/bigO3}
+\renewcommand{\thesubsubsection}{Group \arabic{subsubsection}:}
+\input{tex/bigO4}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
+\input{tex/bigO5}
+\input{tex/bigO6}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}.}
+\input{tex/master7}
+\input{tex/bonus8}
+\input{tex/bonus9}
+\end{document}

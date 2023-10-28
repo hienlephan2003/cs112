@@ -1,0 +1,15 @@
+\subsection{}
+\subsubsection{Phép suy ra này là sai}
+Hai biểu thức này đều là hàm bậc 2, do đó chúng đều có bậc tăng trưởng cùng là $O(n^2)$. Không thể kết luận là 2 biểu thức bằng nhau khi chúng có cùng bậc tăng trưởng. 
+\subsubsection{Chứng minh}
+Giả sử: $n^3 \in O(n^2)$, nghĩa là $\exists c \in \mathbb{R+}$ và $n_0 > 0: 0 \leq n^3 \leq cn^2, \forall n \geq n_0$ \\
+Suy ra: $n \leq c, \forall n \geq n_0$\\
+Điều này không thể xảy ra vì không thể chọn $c$ để thoả điều kiện trên.
+
+Vậy điều giả sử là sai.
+\subsubsection{Chứng minh}
+Giả sử: $\exists c \in \mathbb{R+}$ và $n_0 > 0:$
+$$T(n)=a_k n^k + \dots + a_1 n + a_0 \leq cn^k, \forall n \geq n_0$$\\
+Ta có: $a_k n^k + \dots + a_1 n + a_0 \leq a_k n^k + \dots + a_1 n^k + a_0 n^k = n^k (a_k + \dots + a_1 + a_0)$\\
+Chọn $c = a_k + \dots + a_1 + a_0 \Rightarrow T(n)=a_k n^k + \dots + a_1 n + a_0 \leq cn^k, \forall n \geq n_0 $\\
+Vậy khi chọn $c = a_k + \dots + a_1 + a_0$ và $n_0 = 1$, ta có: $T(n) = O(n^k)$

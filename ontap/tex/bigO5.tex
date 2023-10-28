@@ -1,0 +1,52 @@
+% Reseting the equation number whenever subsubsection is stepped
+\counterwithin*{equation}{subsubsection}
+
+\subsection{}
+\subsubsection{Chứng minh: O(C) = O(1) với C là hằng số}
+Chứng minh $O(C) \subset O(1)$: Với mọi $O(C) = C_1 C$, ta có: $C_1 C = C_2 \in O(1)$\\
+\scalebox{1}{Chứng minh $O(1) \subset O(C)$: Với mọi $O(1) = C_2\cdot 1$, chọn $\displaystyle C_1 =\frac{C_2}{C} \Rightarrow O(1) = C_2 = C_1 C \in O(C)$}\\
+Vậy $O(C) = O(1)$
+\subsubsection{Nếu $f(n) \in O(g(n))$ và $g(n) \in O(h(n))$ thì $f(n) \in O(h(n))$}
+\begin{enumerate}
+    \item Xét $f(n) \in O(g(n)): \exists c_1, \exists n_1\mid f(n) \leq c_1 g(n), \forall n\geq n_1$
+    \item Xét $g(n) \in O(h(n)): \exists c_2, \exists n_2\mid g(n) \leq c_2 h(n), \forall n\geq n_2$
+\end{enumerate}
+Từ 1, 2 suy ra: $f(n) \leq c_1 c_2 h(n)\\ \exists c_3: c_3 \geq c_1 c_2 \Rightarrow f(n) \leq c_3 h(n)$\\
+Vậy: $f(n) \in O(h(n))$
+\subsubsection{max$\{f(n), g(n)\} = \theta(f(n) + g(n))$}
+Ta có: $\displaystyle
+\lim_{n \to +\infty} \frac{max\{f(n), g(n)\}}{f(n) +g(n)}=\lim_{n \to +\infty} \frac{1}{\frac{f(n)}{max\{f(n), g(n)\}}+\frac{g(n)}{max\{f(n), g(n)\}}}=\frac{1}{1+0}=1 
+$
+
+Vì $0<1<+\infty \Rightarrow$ max$\{f(n), g(n)\} = \theta(f(n) + g(n))$
+\subsubsection{Nếu $t(n) \in O(g(n))$ thì $g(n) \in \Omega(t(n))$}
+Xét $t(n) \in O(g(n)): \exists c > 0, \exists n_0 > 0 \mid t(n) \leq c g(n), \forall n \geq n_0$\\
+$\displaystyle \Rightarrow g(n) \geq \frac{1}{c} t(n),$ chọn $\displaystyle c_1 = \frac{1}{c} \Rightarrow g(n) = c_1 t(n), \forall n \geq n_0$\\
+Vậy: $g(n) \in \Omega(t(n))$
+\subsubsection{$\Theta(\alpha g(n))=\Theta(g(n))$  với mọi $\alpha>0$}
+\begin{itemize}
+    \item Xét $f(n) \in \Theta(\alpha g(n)), f(n)$ có dạng $f(n) = c \alpha g(n)$, với $c >0$: $$\displaystyle \lim_{n \to +\infty} \frac{f(n)}{g(n)} = \frac{c \alpha g(n)}{g(n)} = c \alpha < +\infty$$
+    Do đó: \begin{equation}
+        f(n) \in \Theta(\alpha g(n)) \Leftrightarrow c\alpha g(n) \in \Theta(g(n)) \Rightarrow \Theta(\alpha g(n)) \subset \Theta(g(n))
+    \end{equation}
+    \item Xét $h(n) \in \Theta(g(n)), h(n)$ có dạng $h(n) = c g(n)$, với $c >0$: $$\displaystyle \lim_{n \to +\infty} \frac{h(n)}{\alpha g(n)} = \frac{c g(n)}{\alpha g(n)} = \frac{c}{\alpha} < +\infty$$
+    Do đó: \begin{equation}
+        h(n) \in \Theta(g(n)) \Leftrightarrow c g(n) \in \Theta(\alpha g(n)) \Rightarrow \Theta(g(n)) \subset \Theta(\alpha g(n))
+    \end{equation}
+\end{itemize}
+Từ (1) và (2) suy ra: $\Theta(\alpha g(n))=\Theta(g(n)), \forall \alpha > 0$
+\subsubsection{$\Theta(g(n))=O(g(n))\cap \Omega(g(n))$}
+Theo định nghĩa ta có:
+\begin{align}
+    & O(g(n)) = \{f(n): \forall C_1 > 0, n_0 > 0 ,0 \leq f(n) \leq C_1 g(n), \forall n \geq n_0\} \\
+    & \Omega(g(n))=\{f(n):\forall C_2>0,n_0>0,0\leq C_2 g(n) \leq f(n), \forall n\geq n_0\}
+\end{align}
+\begin{align}
+(1) \cap (2) = \{f(n):\forall C_2,C_1>0,n_0>0,0\leq C_2 g(n)\leq f(n)\leq C_1 g(n),\forall n\geq n_0\}
+\end{align}
+Mặt khác:
+\begin{align}
+    \Theta(g(n))=\{f(n): \forall C_1, C_2\geq 0,n_0\geq 0,C_2 g(n)\leq f(n)\leq C_1 g(n),\forall n\geq n_0\}
+\end{align}
+Từ (3) và (4) suy ra: $\Theta(g(n))=O(g(n))\cap \Omega(g(n))$
+

@@ -1,0 +1,85 @@
+\subsection{Định lý Master}
+\subsubsection{$T(n) = 3T(n/2) + n^2$}
+Ta có: $f(n) = n^2, a = 3, b = 2$\\
+Vì $3 < 2^2 \Rightarrow T(n) \in \Theta(n^2)$ \textit{(Trường hợp 1 dạng đơn giản)}
+\subsubsection{$T(n) = 7T(n/3) + n^2$}
+Ta có: $f(n) = n^2, a=7,b=3$\\
+Vì $7 < 3^2 \Rightarrow T(n) \in \Theta(n^2)$ \textit{(Trường hợp 1 dạng đơn giản)}
+\subsubsection{$T(n) = 3T(n/3) + n/2$}
+Ta có: $f(n) = \frac{n}{2}, a=3,b=3$\\
+Vì $3 = 3^1 \Rightarrow T(n) \in \Theta(n\log n)$ \textit{(Trường hợp 2 dạng đơn giản)}
+\subsubsection{$T(n) = 16T(n/4) + n$}
+Ta có: $f(n) = n, a=16,b=4$\\
+Vì $16 > 4^1 \Rightarrow T(n) \in \Theta(n^2)$ \textit{(Trường hợp 3 dạng đơn giản)}
+\subsubsection{$T(n) = 2T(n/4) + n^{0.51}$}
+Ta có: $f(n) = n^{0.51}, a=2,b=4$\\
+Vì $2 < 4^{0.51} \Rightarrow T(n) \in \Theta(n^{0.51})$ \textit{(Trường hợp 1 dạng đơn giản)}
+\subsubsection{$T(n) = 3T(n/2) + n$}
+Ta có: $f(n) = n, a=3,b=2$\\
+Vì $3 > 2^1 \Rightarrow T(n) \in \Theta(n^{\log_2 3})$ \textit{(Trường hợp 3 dạng đơn giản)}
+\subsubsection{$T(n) = 3T(n/3) +\sqrt{n}$}
+Ta có: $f(n) = \sqrt{n}, a=3,b=3$\\
+Vì $3 > 3^{0.5} \Rightarrow T(n) \in \Theta(n)$ \textit{(Trường hợp 3 dạng đơn giản)}
+\subsubsection{$T(n) = 4T(n/2) + cn$}
+Ta có: $f(n) = cn, a=4,b=2$\\
+Vì $4 > 2^1 \Rightarrow T(n) \in \Theta(n^2)$ \textit{(Trường hợp 3 dạng đơn giản)}
+\subsubsection{$T(n) = 4T(n/4) + 5n$}
+Ta có: $f(n) = 5n, a=4,b=4$\\
+Vì $4 = 4^1 \Rightarrow T(n) \in \Theta(n\log n)$ \textit{(Trường hợp 2 dạng đơn giản)}
+\subsubsection{$T(n) = 5T(n/4) + 4n$}
+Ta có: $f(n) = 4n, a=5,b=4$\\
+Vì $5 > 4^1 \Rightarrow T(n) \in \Theta(n^{\log_4 5})$ \textit{(Trường hợp 3 dạng đơn giản)}
+\subsubsection{$T(n) = 4T(n/5) + 5n$}
+Ta có: $f(n) = 5n, a=4,b=5$\\
+Vì $4 < 5^1 \Rightarrow T(n) \in \Theta(n)$ \textit{(Trường hợp 1 dạng đơn giản)}
+\subsubsection{$T(n) = 25T(n/5) + n^2$}
+Ta có: $f(n) = n^2, a=25,b=5$\\
+Vì $25 = 5^2 \Rightarrow T(n) \in \Theta(n^2\log n)$ \textit{(Trường hợp 2 dạng đơn giản)}
+\subsubsection{$T(n) = 10T(n/3) + 17n^{1.2}$}
+Ta có: $f(n) = 17n^{1.2}, a=10,b=3$\\
+Vì $10 > 3^{1.2} \Rightarrow T(n) \in \Theta(n^{\log_3 10})$ \textit{(Trường hợp 3 dạng đơn giản)}
+\subsubsection{$T(n) = 7T(n/2) + n^3$}
+Ta có: $f(n) = n^3, a=7,b=2$\\
+Vì $7 < 2^3 \Rightarrow T(n) \in \Theta(n^3)$ \textit{(Trường hợp 1 dạng đơn giản)}
+\subsubsection{$T(n) = 4T(n/2) + \log n$}
+Ta có: $\log_b a = \log_2 4 = 2, \quad f(n) = \log n = O(n^{2-\epsilon}),\quad 0 < \epsilon < 2 $ \\
+Vậy: $T(n) = \Theta(n^2)$ \textit{(Trường hợp 1 dạng tổng quát)}
+\subsubsection{$T(n) = 4T(n/5) + \log n$}
+Ta có: $\log_b a = \log_5 4 , \quad f(n) = \log n = O(n^{\log_5 4-\epsilon}),\quad 0 < \epsilon < \log_5 4 $ \\
+Vậy: $T(n) = \Theta(n^{\log_5 4})$ \textit{(Trường hợp 1 dạng tổng quát)}
+\subsubsection{$T(n)=\sqrt{2}T(n/2)+\log n$}
+Ta có: $\log_b a = \log_2 \sqrt{2} = \frac{1}{2} , \quad f(n) = \log n = O(n^{\frac{1}{2}-\epsilon}),\quad 0 < \epsilon < \frac{1}{2} $ \\
+Vậy: $T(n) = \Theta(n^{\frac{1}{2}})$ \textit{(Trường hợp 1 dạng tổng quát)}
+\subsubsection{$T(n) = 2T(n/3) +n\log n$}
+Ta có: $\log_b a = \log_3 2 , \quad f(n) = n\log n = \Theta\left(n^{\log_3 2} \log^k n \right), \quad k = 1 \geq 0 $ \\
+Vậy: $T(n) = \Theta\left(n^{\log_3 2} \log^2 n \right)$ \textit{(Trường hợp 2 dạng tổng quát)}
+\subsubsection{$T(n) = 3T(n/4) +n\log n$}
+Ta có: $\log_b a = \log_4 3 , \quad f(n) = n\log n = \Theta\left(n^{\log_4 3} \log^k n \right), \quad k = 1 \geq 0 $ \\
+Vậy: $T(n) = \Theta\left(n^{\log_4 3} \log^2 n \right)$ \textit{(Trường hợp 2 dạng tổng quát)}
+\subsubsection{$T(n) = 6T(n/3) +n^2\log n$}
+Ta có: $\log_b a = \log_3 6 , \quad f(n) = n^2\log n = \Theta\left(n^{\log_3 6} \log^k n \right), \quad k = 1 \geq 0 $ \\
+Vậy: $T(n) = \Theta\left(n^{\log_3 6} \log^2 n \right)$ \textit{(Trường hợp 2 dạng tổng quát)}
+\subsubsection{$T(n) = 3T(n/5) +\log^2 n$}
+Ta có: $\log_b a = \log_5 3 , \quad f(n) = \log^2 n = O(n^{\log_5 3-\epsilon}),\quad 0 < \epsilon < \log_5 3 $ \\
+Vậy: $T(n) = \Theta(n^{\log_5 3})$ \textit{(Trường hợp 1 dạng tổng quát)}
+\subsubsection{$T(n) = 2T(n/2) +\frac{n}{\log n}$}
+Ta có: $\log_b a = \log_2 2 = 1 , \quad f(n) = \frac{n}{\log n} = O(n) $ \\
+Vậy: $T(n) = \Theta(n)$ \textit{(Trường hợp 1 dạng tổng quát)}
+\subsubsection{$T(n) = 2^nT(n/2) +n^n$}
+Vì $a = 2^n$ không phải là hằng số nên không áp dụng được định lý Master
+\subsubsection{$T(n) = 0.5T(n/2) + n$}
+Vì $a = 0.5 < 1$ nên không áp dụng được định lý Master
+\subsubsection{$T(n) = T(n/2) + n(2 - \cos n)$}
+Ta có: $\log_b a = \log_2 1 = 0 , \quad f(n) = n(2 - \cos n) = \Omega(n^{\epsilon}),\quad \epsilon = 0.1 $ \\
+Xét điều kiện: $f(n/2) \leq cf(n) \Leftrightarrow c \geq \frac{n}{2}(2 - \cos \frac{n}{2}) \div n(2 - \cos n) \Leftrightarrow c \geq \frac{3}{2}$\\ Do đó: $\nexists c < 1$ thoả mãn. \\
+Không áp dụng được định lý Master.
+\subsubsection{$T(n) = 64T(n/8) - n^2 \log n$}
+Vì $f(n) = -n^2 \log n < 0$ nên không thể áp dụng định lý Master
+\subsubsection{$T(n) = T(n/2) + 2^n$}
+Ta có: $\log_b a = \log_2 1 = 0 , \quad f(n) = 2^n = \Omega(n^{\epsilon}),\quad \epsilon = 1 $ \\
+Xét điều kiện: $\displaystyle f(n/2) \leq cf(n) \Leftrightarrow c \geq 2^{\frac{n}{2}} \div 2^n \Leftrightarrow c \geq \max_{n \to +\infty} \frac{2^{\frac{n}{2}}}{2^n} = 0$\\ Do đó: $\exists c < 1$ thoả mãn. \\
+Vậy: $T(n) = \Theta(f(n)) = \Theta(2^n)$ \emph{(Trường hợp 3 dạng tổng quát)}
+\subsubsection{$T(n) = 16T(n/4) + n!$}
+Ta có: $\log_b a = \log_4 16 = 2 , \quad f(n) = n! = \Omega(n^{2+\epsilon}),\quad \epsilon = 1 $ \\
+Xét điều kiện: $\displaystyle 16f(n/4) \leq cf(n) \Leftrightarrow c \geq 16\cdot \left(\frac{n}{4}\right)! \div n! \Leftrightarrow c \geq \max_{n \to +\infty} \frac{16\cdot \left(\frac{n}{4}\right)!}{n!} = 0$\\ Do đó: $\exists c < 1$ thoả mãn. \\
+Vậy: $T(n) = \Theta(f(n)) = \Theta(n!)$ \emph{(Trường hợp 3 dạng tổng quát)}

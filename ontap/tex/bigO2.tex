@@ -1,0 +1,25 @@
+\subsection{}
+Với mỗi hàm $f(n)$ và thời gian $t$, chọn giá trị $n$ lớn nhất của bài toán để có thể được giải quyết trong thời gian $t$, xem như thuật toán sẽ giải bài toán với thời gian $f(n)\mu$s.
+
+Giá trị $n$ lớn nhất ($n_{max}$) thoả mãn: $f(n_{max})\leq t \quad(\mu$s)
+
+Quy ước: 1 month = 30 days; 1 year = 365 days; $\log n = \log_2 n$
+
+\begin{adjustbox}{width=\textwidth, valign=t}
+\centering
+\begin{tabular}{crrrrrrr}
+\toprule
+$f(n)$ & 1 second &  1 minute &     1 hour &        1 day &       1 month &         1 year &      1 century \\
+\midrule
+ $\log n$ &  $2^{E+6}$ &   $2^{6E+7}$ &  $2^{3.6E+9}$ &  $2^{8.64E+10}$ &  $2^{2.592E+12}$ &  $2^{3.1536E+13}$ &  $2^{3.1536E+15}$ \\
+ $\sqrt{n}$ &    $10^{12}$ &  3.60E+15 &   1.30E+19 &     7.46E+21 &      6.72E+24 &       9.94E+26 &       9.94E+30 \\
+   n &     $10^{6}$ &  6.00E+07 &   3.60E+09 &     8.64E+10 &      2.59E+12 &       3.15E+13 &       3.15E+15 \\
+ $n\log n$ &    62746 &   2801417 &  133378058 &   2755147513 &   71870856404 &    7.97634E+11 &     6.8611E+13 \\
+   $n^2$ &     1000 &      7745 &      60000 &       293938 &       1609968 &        5615692 &       56156922 \\
+    $n^3$ &      100 &       391 &       1532 &         4420 &         13736 &          31593 &         146645 \\
+   $2^n$ &       19 &        25 &         31 &           36 &            41 &             44 &             51 \\
+      $n!$ &        9 &        11 &         12 &           13 &            15 &             16 &             17 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+

@@ -1,0 +1,130 @@
+\subsection{Chứng minh các tính chất sau}
+\begin{itemize}
+\item
+  \(\mathbf{n +}\mathbf{n}^{\mathbf{2}}\mathbf{O(}\mathbf{\ln}\mathbf{n}\mathbf{) = O(}\mathbf{n}^{\mathbf{2}}\mathbf{\ln}\mathbf{n}\mathbf{)}\)
+\end{itemize}
+
+Xét hàm số \(f(n) \in O\left( \ln n \right)\) thì:
+
+\(\exists c_{1} \in \mathbb{R}^{+},\ n_{0} \in \ \mathbb{N}\) sao cho:
+\(f(n) \leq c_{1}\ln n,\forall n \geq n_{0}\)
+
+\(\rightarrow\) Đặt
+\(g(n) = n + n^{2}f(n) \leq n + n^{2}c_{1}\ln n,\forall n \geq n_{0}\ \)
+
+Chọn
+\(c_{1} = \frac{1}{2},n_{0} = 2 \rightarrow g(n) \leq n + \frac{1}{2}n^{2}\ln{n \leq {\frac{3}{2}n}^{2}\ln n}\)
+(vì \(n \leq \ n^{2}\ln n\) với \(\forall n \geq 2)\)
+
+\(\rightarrow \exists c_{2} = \frac{3}{2},n_{0} = 2\) sao cho:
+\(g(n) \leq c_{2}n^{2}\ln n,\forall n \geq n_{0}\)
+
+\[\rightarrow g(n) = O\left( n^{2}\ln n \right)\]
+
+Vậy \(n + n^{2}O\left( \ln n \right) = O\left( n^{2}\ln n \right)\)
+(đpcm)
+
+\begin{itemize}
+\item
+  \(\mathbf{g}\left( \mathbf{n} \right)\mathbf{\in O}\left( \mathbf{h}\left( \mathbf{n} \right) \right)\mathbf{\rightarrow O}\left( \mathbf{g}\left( \mathbf{n} \right) \right)\mathbf{\subseteq O}\left( \mathbf{h}\left( \mathbf{n} \right) \right)\)
+\end{itemize}
+
+Vì \(g(n) \in O\left( h(n) \right)\) nên
+\(\exists c_{1} \in \mathbb{R}^{+},n_{1} \in \ \mathbb{N}\) sao cho:
+\(g(n) \leq c_{1}h(n),\forall n \geq n_{1}\)
+
+Xét hàm số \(f(n) \in \ O(g(n))\) thì:
+
+\(\exists c_{2} \in \mathbb{R}^{+},\ n_{2} \in \ \mathbb{N}\) sao cho:
+\(f(n) \leq c_{2}g(n),\forall n \geq n_{2}\)
+
+\[\rightarrow f(n) \leq c_{2}\left( c_{1}h(n) \right) = \left( c_{1}c_{2} \right)h(n),\forall n \geq max(n_{1},n_{2})\]
+
+Do đó:
+\(\exists c_{3} = c_{1}*c_{2} \in \mathbb{R}^{+},n_{3} = \max\left( n_{1},n_{2} \right) \in \mathbb{N}\)
+sao cho: \(f(n) \leq c_{3}h(n),\forall n \geq n_{3}\)
+
+\(\rightarrow f(n) \in O\left( h(n) \right)\)
+
+\(\rightarrow\) Với bất kỳ hàm số \(f(n) \in \ O(g(n))\) thì
+\(f(n) \in O\left( h(n) \right)\mathbf{\rightarrow}O\left( g(n) \right) \subseteq O\left( h(n) \right)\)
+
+Vậy ta có điều phải chứng minh
+
+\begin{itemize}
+\item
+  \(\mathbf{O}\left( \mathbf{f}\left( \mathbf{n} \right) \right)\mathbf{= O}\left( \mathbf{g}\left( \mathbf{n} \right) \right)\mathbf{\leftrightarrow g}\left( \mathbf{n} \right)\mathbf{\in O}\left( \mathbf{f}\left( \mathbf{n} \right) \right)\)
+  \textbf{và}
+  \(\mathbf{f}\left( \mathbf{n} \right)\mathbf{\in \ O(g(n))}\)
+\end{itemize}
+
+\[O\left( f(n) \right) = O\left( g(n) \right) \leftrightarrow \ \left\{ \begin{matrix}
+O\left( f(n) \right)\  \subset \ O\left( g(n) \right) \\
+O\left( g(n) \right)\  \subset \ O\left( f(n) \right) \\
+\end{matrix} \right.\ \]
+
+Với \(O\left( f(n) \right)\  \subset \ O\left( g(n) \right)\)
+\(\leftrightarrow h(n)\  \in O\left( f(n) \right)\) thì
+\(h(n)\  \in O\left( g(n) \right)\)
+
+Ở đây chọn \(h(n) = f(n) \rightarrow \ f(n) \in O\left( g(n) \right)\)
+(*)
+
+Chứng minh tương tự với
+\(O\left( g(n) \right)\  \subset \ O\left( f(n) \right)\), ta được:
+\(g(n) \in O\left( f(n) \right)\) (**)
+
+Từ (*) và (**) \(\rightarrow f(n) \in O\left( g(n) \right)\) và
+\(g(n) \in O\left( f(n) \right)\) (đpcm)
+
+\begin{itemize}
+\item
+  \(\mathbf{O}\left( \mathbf{f}\left( \mathbf{n} \right) \right)\mathbf{\subset O}\left( \mathbf{g}\left( \mathbf{n} \right) \right)\mathbf{\leftrightarrow f}\left( \mathbf{n} \right)\mathbf{\in O}\left( \mathbf{g}\left( \mathbf{n} \right) \right)\)
+  \textbf{và}
+  \(\mathbf{\text{\ g}}\left( \mathbf{n} \right)\mathbf{\notin \ O(f(n))}\)
+\end{itemize}
+
+Với \(O\left( f(n) \right)\  \subset \ O\left( g(n) \right)\)
+\(\leftrightarrow h(n)\  \in O\left( f(n) \right)\) thì
+\(h(n)\  \in O\left( g(n) \right)\)
+
+Ở đây chọn \(h(n) = f(n) \rightarrow \ f(n) \in O\left( g(n) \right)\)
+(*)
+
+\(\mathbf{\rightarrow}\mathbf{\exists}c \in \mathbb{R}^{+},n_{0} \in \mathbb{N}\) sao cho:
+\(f(n) \leq cg(n) \leftrightarrow \frac{1}{c}f(n) \leq g(n),\forall n \geq n_{0}\)
+
+\(\mathbf{\rightarrow}\mathbf{\exists}c^{'} = \frac{1}{c} \in \mathbb{R}^{+},{n_{0}^{'} = n}_{0} \in \mathbb{N}\)
+sao cho:
+
+\(c^{'}f(n) \leq g(n),\forall n \geq n_{0}^{'} \rightarrow \ g(n) \in \Omega\left( f(n) \right)\  \neq O\left( f(n) \right) \rightarrow g(n) \notin O\left( f(n) \right)\)(**)
+
+Từ (*) và (**) \(\rightarrow f(n) \in O\left( g(n) \right)\) và
+\(g(n) \notin O\left( f(n) \right)\) (đpcm)
+
+\begin{itemize}
+\item
+  \(\mathbf{f}\left( \mathbf{n} \right)\mathbf{\in O}\left( \mathbf{n} \right)\mathbf{\rightarrow}\mathbf{2}^{\mathbf{f}\left( \mathbf{n} \right)}\mathbf{\in O}\left( \mathbf{2}^{\mathbf{n}} \right)\)
+\end{itemize}
+
+Xét hàm số \(f(n) \in O(n)\) thì:
+
+\(\exists c_{1} \in \mathbb{R}^{+},\ n_{0} \in \ \mathbb{N}\) sao cho:
+\(f(n) \leq c_{1}n,\forall n \geq n_{0}\)
+
+\[\rightarrow 2^{f(n)} \leq 2^{c_{1}n},\forall n \geq n_{0}\]
+
++ Nếu \(c_{1} = 1:\)\\
+\(2^{f(n)} \leq 2^{n},\forall n \geq n_{0} \rightarrow \exists c_{2} = 1,n_{0} \in \mathbb{N}\)
+sao cho: \(2^{f(n)} \leq {c_{2}2}^{n},\forall n \geq n_{0}\)
+
+\[\rightarrow 2^{f(n)} \in O\left( 2^{n} \right)\]
+
++ Nếu \(c_{1} \neq 1:\)
+
+\(2^{f(n)} \leq 2^{c_{1}n} = \left( 2^{c_{1}} \right)^{n}\  \neq {c_{2}2}^{n}\)
+(với \(\ \forall c_{1} \neq \ 1)\)
+
+\[\rightarrow 2^{f(n)} \notin O\left( 2^{n} \right)\]
+
+Vậy điều cần chứng minh là sai

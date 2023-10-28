@@ -1,0 +1,183 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[pdftex]{graphicx} %for embedding images
+\usepackage[utf8]{vietnam}
+\usepackage{enumitem}
+\usepackage{adjustbox}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{changepage}
+\usepackage{setspace}
+\usepackage{booktabs}
+\definecolor{bg}{gray}{0.95}
+\usepackage{array}
+\usepackage{diagbox}
+\usepackage{threeparttable}
+\begin{document}
+
+\pagenumbering{roman} %numbering before main content starts
+
+\begin{titlepage}
+
+\begin{center}
+
+\includegraphics[width=1\textwidth]{img/banner_uit.png}\\%\\[0.1in]
+\vspace{3em}%
+% Title
+\Large \textbf {BÀI TẬP MÔN\\TRÍ TUỆ NHÂN TẠO}\\%\\[0.5in]
+\vspace{1em}%
+\normalsize by \\%
+\vspace{1em}
+\textup{\small\bf Hoàng Quang Khải - 21520952}
+
+
+ \vspace{1em}%
+{\bf Faculty of Computer Science}\\[0.5in]
+
+\emph{Assignment \#03: Evaluation functions for Minimax/AlphaBeta/Expectimax\\Bài toán knapsack là một bài toán tối ưu hóa phổ biến trong khoa học máy tính. Cho một tập hợp các vật phẩm, mỗi vật phẩm có khối lượng và giá trị, ta cần xác định những vật phẩm nào nên được chọn để tổng khối lượng của chúng không vượt quá một giới hạn cho trước và tổng giá trị của chúng là lớn nhất có thể. Bài toán này là NP-hard, nghĩa là tính toán của nó sẽ trở nên rất tốn kém khi giải quyết với kích thước đầu vào lớn.}
+
+\vspace{1in}
+
+    
+% Submitted by
+\normalsize {\bf GV hướng dẫn:} \\
+
+TS. Lương Ngọc Hoàng\\
+\vspace{1em}
+
+\vfill
+
+% Bottom of the page
+
+TPHCM, May 15, 2023
+
+\end{center}
+
+\end{titlepage}
+
+
+\newpage
+\pagenumbering{arabic} %reset numbering to normal for the main content
+
+\onehalfspacing
+
+\section{Chiến thuật thiết kế Evaluation Function}
+Ý tưởng chính trong bài toán này là dựa trên những kinh nghiệm thực tế người chơi để thiết lập trọng số cho Pac-man. Evaluation function sẽ cho ra giá trị là một số, Pac-man sẽ chọn hành động nào có giá trị lớn nhất. Những đặc trưng được sử dụng trong evaluation function nhằm cực đại hoá điểm số mà Pac-man có thể đạt được, cụ thể như sau:
+\begin{itemize}
+    \item Số điểm hiện tại (scoreValue)
+    \item Khoảng cách đến con ma màu (con ma mà Pac-man không thể ăn được) gần nhất (activeGhostValue)
+    \item Khoảng cách đến con ma trắng (con ma mà Pac-man có thể ăn được) gần nhất (scaredGhostValue)
+    \item Khoảng cách đến viên thức ăn nhỏ gần nhất (foodValue)
+    \item Số thức ăn nhỏ còn lại trong màn chơi (remainFoodValue)
+    \item Khoảng cách đến viên thức ăn lớn gần nhất (capsuleValue)
+    \item Số viên thức ăn lớn còn lại trong màn chơi (remainCapsuleValue)
+    \item Trạng thái chiến thắng trò chơi (winValue)
+    \item Trạng thái thua trò chơi (loseValue)
+\end{itemize}
+Chiến thuật được sử dụng trong bài này: \textbf{\textit{"Tìm cầu lớn, bắt ma trắng"}}. Việc đặt trọng số không chỉ ưu tiên độ lớn mà còn xét đến trọng số dương và âm. Đối với những đặc trưng có trọng số dương: đặc trưng nào có trọng số dương hơn sẽ làm tăng tổng giá trị hơn từ đó khuyến khích Pacman thực hiện hành động theo hướng tăng tổng giá trị. Ngược lại, đối với những đặc trưng có trọng số âm: đặc trưng nào có trọng số âm hơn sẽ làm giảm tổng giá trị hơn từ đó khuyến khích Pacman thực hiện hành động theo hướng làm dương hơn tổng giá trị.\\
+\textit{Ví dụ:} Gọi $A = -0.5 \cdot$ activeGhostValue và $ B =-5 \cdot$ activeGhostValue là hai chiến thuật trong bài toán. \par Khi áp dụng chiến thuật B thì Pac-man sẽ có xu hướng lại gần con ma bóng tối hơn để tăng giá trị (vì khoảng cách càng xa, giá trị càng âm) của B. Trong khi đó, khi áp dụng chiến thuật A thì Pac-man ít có xu hướng lại gần con ma bóng tối hơn vì giá trị A âm ít đáng kể hơn.\\\par
+Áp dụng những kinh nghiệm trên, ta có bảng trọng số như sau:
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5} % Khoảng cách dọc giữa các dòng
+    \caption{Đặc trưng và trọng số dùng trong hàm đánh giá}
+    \begin{tabular}{r|c|p{0.6\linewidth}}
+        \hline
+         Đặc trưng & Trọng số & Giải thích  \\
+        \hline
+         scoreValue & $2$ & Pac-man ưu tiên hành động để có số điểm cao hơn. Nghĩa là Pac-man sẽ chọn hành động mang lại nhiều điểm hơn.  \\
+         activeGhostValue & $-2.5$& Xu hướng tiếp cận vừa phải con ma màu gần nhất.\\ 
+         scaredGhostValue & $-5$& Xu hướng tiếp cận nhanh con ma trắng gần nhất. Pac-man ưu tiên ăn các con ma có thể ăn được để đạt điểm số cao hơn.\\
+         foodValue & $-2$& Xu hướng tiếp cận viên thức ăn nhỏ gần nhất. Điều này khuyến khích Pac-man tìm cách ăn nhiều thức ăn để có số điểm cao hơn.\\
+         remainFoodValue &$-4.5$ & Pac-man có xu hướng quan tâm đến số lượng thức ăn còn lại trong màn chơi. Khuyến khích Pac-man ăn nhiều thức ăn lân cận hơn, để số lượng thức ăn còn lại càng ít càng tốt. \\
+         capsuleValue & 1.5& Pac-man có xu hướng lại gần viên thức ăn lớn gần nhất để có thể săn ma và đạt điểm số cao hơn.\\
+         remainCapsuleValue &$-2$ & Pac-man sẽ có xu hướng ưu tiên ăn nhiều hơn các viên thức ăn lớn còn lại, vì càng nhiều thức ăn lớn còn lại giá trị này càng âm. \\
+         winValue & 10& Khuyến khích Pac-man hoàn thành màn chơi.\\
+         loseValue & $-20$& Khuyến khích Pac-man tránh tình huống dẫn đến thất bại và chọn hành động duy trì trạng thái sống xót.\\
+         \hline
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+Ngoài việc tính toán độ lớn trọng số dương hay âm, cũng cần xét đến sự tương quan giữa các trọng số của các đặc trưng để tránh trong một số trường hợp đặc trưng này "outweigh" đặc trưng kia, như thế sẽ không đáp ứng được mục đích của việc thiết kế. Để duy trì được trạng thái cân bằng, trong chiến thuật này, trọng số của activeGhostValue = 1/2 trọng số scaredGhostValue, đồng thời trọng số của capsuleValue là 1.5 nghĩa là Pacman sẽ tiếp cận vừa phải tới những con ma màu, trong khi đó cũng tiến dần tới viên thức ăn lớn, khi ăn được viên thức ăn lớn, điều đó cũng đồng nghĩa khoảng cách tới các con ma trắng lúc này cũng khá gần, từ đó Pac-man cũng sẽ ít tốn chi phí hơn để ăn các con ma trắng này. Ngoài ra, trọng số dành cho remainCapsuleValue là $-2$ có nghĩa là khi đến gần viên thức ăn lớn thì sẽ thúc đẩy Pac-man ăn viên thức ăn đó hơn. Bên cạnh đó, trọng số scoreValue = 2 cũng góp phần vào việc thúc đẩy Pac-man ăn những con ma trắng, vì điểm của con ma trắng gấp 20 lần điểm của viên thức ăn nhỏ. Mặt khác, để cân bằng chiến thuật, Pac-man sẽ không quá đánh đổi việc rượt đuổi theo các con ma trắng mà quên đi việc ăn các viên thức ăn nhỏ có thể sẽ có lợi hơn, nên trọng số cho foodValue $= -2$ và remainFoodValue = $-4.5$ để Pac-man ăn các viên thức ăn lân cận trước. Khi ván chơi sắp đi đến hồi kết, không còn viên thức ăn lớn nữa, thì trọng số cho winValue = 10, nghĩa là lúc này Pac-man sẽ đổi chiến thuật chuyển qua kết thúc màn chơi càng nhanh càng tốt. Ngược lại, trong những tình huống sẽ dẫn đến thất bại, trọng số loseValue = $-20$ để ngăn cho Pac-man không dại dột chọn hành động dẫn đến thất bại.
+
+\section{Kết quả thử nghiệm}
+\subsection{Bản đồ: smallClassic}
+\begin{table}[H]
+    \begin{center}
+        \renewcommand{\arraystretch}{1.5} % Khoảng cách dọc giữa các dòng
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+        depth = 3 & \multicolumn{2}{c|}{Minimax} & \multicolumn{2}{c|}{AlphaBeta} & \multicolumn{2}{c|}{Expectimax} \\
+    \cline{1-7}
+        Game & scoreEvaluation&myEvaluation &scoreEvaluation &myEvaluation & scoreEvaluation & myEvaluation \\
+    \hline
+        1& & 1550& & & & 1543\\
+        2& & 1752& & & & 1768\\
+        3& & 1372& & & & 1749\\
+        4& & 1746& & & & 702*\\
+        5& & 1767& & & & 1750\\
+        6& & 1746& & & & 1748\\
+        7& & $-155$*& & & & 1777\\
+        8& & 1744& & & & 1573   \\
+        9& & 1751& & & & 1742\\
+       10& & 1542& & & & 1573\\
+    \hline
+Avg. Score & &1481.5 & & & & 1592.5\\
+    \hline
+Win rate (\%) & & & & & & 90\\
+    \hline
+    \end{tabular}
+    }
+
+    \end{center}
+
+    \footnotesize{* \textit{Màn chơi thất bại}}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5} % Khoảng cách dọc giữa các dòng
+    \begin{tabular}{c|c|c}
+    \hline
+         Game & Score & Rate  \\
+    \hline
+         1 & 1543 & Win \\
+          2 & 1768 & Win \\
+         3 & 1749 & Win \\
+         4 & 702 & Lose \\
+         5 & 1750 & Win \\
+         6 & 1748 & Win \\
+         7 & 1777 & Win \\
+         8 & 1573 & Win \\
+         9 & 1742 & Win \\
+         10 & 1573 & Win
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+\subsection{Bản đồ: mediumClassic}
+\subsection{Bản đồ: contestClassic}
+\subsection{Bản đồ: trappedClassic}
+\subsection{Bản đồ: capsuleClassic}
+\section{Kết luận}
+Dựa vào bảng thống kê trên, chúng ta có thể kết luận rằng các nhóm test case có kích thước lớn hơn (ví dụ như nhóm có 5000 hoặc 10000 items) sẽ khó để giải quyết hơn so với các nhóm test case có kích thước nhỏ hơn (ví dụ như nhóm có 50 hoặc 100 items). Điều này là do khi kích thước của bài toán tăng lên, thì thời gian tính toán cần thiết để giải quyết bài toán cũng sẽ tăng lên đáng kể. Chính vì thế, ta có thể phân loại mức độ khó của nhóm test case như sau:\begin{itemize}
+    \item Nhóm test case dễ: 00, 01, 05 - tất cả các lời giải đều tối ưu và thời gian chạy đều rất nhanh, trong đó:
+    \begin{itemize}
+        \item 00 Uncorrelated \& 01 WeaklyCorrelated: bộ test case không có sự tương quan nhiều giữa \texttt{weight} và \texttt{value} vì thế thuật toán không phải phân vân lựa chọn những bộ \texttt{weight} và \texttt{value} có giá trị tương đương. Tỉ lệ giá trị trên đơn vị khối lượng cũng ít tương quan hơn \texttt{(value/weight)}.
+        \item 05 SubsetSum: bộ test case chứa tập con có giá trị bằng tổng của 1 số, trong trường hợp này là \texttt{capacities} vì thế việc lấp đầy \texttt{capacities} là rất nhanh.
+    \end{itemize}
+    \item Nhóm test case khó: 07, 08, 09 - có nhiều lời giải không tối ưu và thời gian chạy tương đối lâu, trong đó:
+    \begin{itemize}
+        \item 07SpannerUncorrelated
+        \item 08SpannerWeaklyCorrelated
+        \item 09SpannerStronglyCorrelated: những bộ test case này được sinh ra từ Spanner set - theo các mức độ tương quan khác nhau. Có nghĩa là khi mức độ tương quan giữa bộ \texttt{(weight, value)} càng lớn thì độ khó của test case càng tăng. \textit{Quá trình tạo spanner set được giới thiệu bởi D. Pisinger trong bài báo Genetic Algorithm for a class of Knapsack Problems \footnote{Genetic Algorithm for a class of Knapsack Problems: https://arxiv.org/ftp/arxiv/papers/1903/1903.03494.pdf}}
+    \end{itemize}
+\end{itemize}
+\end{document}

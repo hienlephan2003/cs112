@@ -1,0 +1,53 @@
+\subsection{Các khẳng định bên dưới là đúng hay sai?}
+\subsubsection{Nếu $f(n) = \Theta(g(n))$ và $g(n) = \Theta(h(n))$, thì $h(n) = \Theta(f(n))$}
+\begin{enumerate}
+    \item Xét $f(n) = \Theta(g(n))$:
+    $$\lim_{n \to +\infty} \frac{f(n)}{g(n)} = c_1 \quad (0 < c_1 < +\infty)$$
+    \item Xét $g(n) = \Theta(h(n))$:
+    $$\lim_{n \to +\infty} \frac{g(n)}{h(n)} = c_2 \quad (0 < c_2< +\infty)$$ 
+    \item Giả sử $h(n) = \Theta(f(n))$:
+        $$\lim_{n \to +\infty} \frac{h(n)}{f(n)} = \lim_{n \to +\infty} \frac{h(n)g(n)}{g(n)f(n)} = C\quad (0<C<+\infty)$$
+\end{enumerate}
+Từ 1, 2, 3 ta có: $$\lim_{n \to +\infty} \frac{h(n)}{f(n)} = \frac{1}{c_1 c_2} \quad (0 < \frac{1}{c_1 c_2} < +\infty)$$
+Vậy: $h(n) = \Theta(f(n))$, khẳng định trên là đúng.
+\subsubsection{Nếu $f(n) = O(g(n))$ và $g(n) = O(h(n))$ thì $h(n) = \Omega(f(n))$}
+\begin{enumerate}
+    \item Xét $f(n) = O(g(n))$:
+    $$\lim_{n \to +\infty} \frac{f(n)}{g(n)} = c_1 \quad (c_1 < +\infty)$$
+    \item Xét $g(n) = O(h(n))$:
+    $$\lim_{n \to +\infty} \frac{g(n)}{h(n)} = c_2 \quad (c_2< +\infty)$$ 
+    \item Giả sử $h(n) = O(f(n))$:
+        $$\lim_{n \to +\infty} \frac{h(n)}{f(n)} = \lim_{n \to +\infty} \frac{h(n)g(n)}{g(n)f(n)} = C\quad (C<+\infty)$$
+\end{enumerate}
+Từ 1, 2, 3 ta có: $$\lim_{n \to +\infty} \frac{h(n)}{f(n)} = \frac{1}{c_1 c_2}$$
+Mà $c_1, c_2 < +\infty$ nên $\frac{1}{c_1 c_2}$ không xác định được.\\
+Vậy khẳng định trên là sai.
+\subsubsection{Nếu $f(n) = O(g(n))$ và $g(n) = O(f(n))$ thì $f(n) = g(n)$}
+\begin{enumerate}
+    \item Xét $f(n) = O(g(n))$:
+    $$\lim_{n \to +\infty} \frac{f(n)}{g(n)} = c_1 \quad (c_1 < +\infty)$$
+    \item Xét $g(n) = O(h(n))$:
+    $$\lim_{n \to +\infty} \frac{g(n)}{h(n)} = c_2 \quad (c_2< +\infty)$$ 
+\end{enumerate}
+Từ 1, 2 ta có: $c_1, c_2 < +\infty \Rightarrow$ Không thể xác định $c_1 = c_2$ hay không.\\
+Vậy khẳng định trên là sai.
+\subsubsection{$\displaystyle \frac{n}{100}=\Omega(n)$}
+Ta có: $$\lim_{n \to +\infty} \frac{\frac{n}{100}}{n}=\lim_{n \to +\infty} \frac{1}{100} = \frac{1}{100} > 0 $$
+Vậy khẳng định trên là đúng
+\subsubsection{$f(n) + O(f(n)) = \Theta(f(n))$}
+Xét $f(n) = O(f(n))$:$$\lim_{n \to +\infty} \frac{O(f(n))}{f(n)} = c \quad (0 < c < +\infty)$$
+Suy ra: $$\lim_{n \to +\infty} \frac{f(n) + O(f(n))}{f(n)} = 1 + c$$
+Mà $0 < 1 + c < +\infty$\\
+Vậy khẳng định trên là đúng
+\subsubsection{$2^{10n}=O(2^n)$}
+Ta có: $$\lim_{n \to +\infty} \frac{2^{10n}}{2^n} =\lim_{n \to +\infty} 2^{9n} = +\infty $$
+Suy ra: $2^{10n} \ne O(2^n)$\\
+Vậy khẳng định trên là sai.
+\subsubsection{$2^{n+10}=O(2^n)$}
+Ta có: $$\lim_{n \to +\infty} \frac{2^{n+10}}{2^n} =2^{10} < +\infty $$
+Suy ra: $2^{10n} = O(2^n)$\\
+Vậy khẳng định trên là đúng.
+\subsubsection{$\log_{10} n = \Theta(\log_2 n)$}
+Ta có: $$\lim_{n \to +\infty} \frac{\log_{10} n}{\log_2 n} = \log_{10} 2 < +\infty$$
+Suy ra: $\log_{10} n = \Theta(\log_2 n)$\\
+Vậy khẳng định trên là đúng.

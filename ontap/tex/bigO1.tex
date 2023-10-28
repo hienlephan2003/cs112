@@ -1,0 +1,16 @@
+\subsection{}
+\subsubsection{Độ phức tạp của thuật toán là một khái niệm để đo lường lượng tài nguyên (thời gian và bộ nhớ) cần thiết để thực hiện thuật toán}
+\begin{itemize}
+    \item Độ phức tạp thời gian: các thuật toán cần một lượng thời gian hữu hạn để thực thi, thời gian mà thuật toán cần để giải bài toán đã cho gọi là độ phức tạp thời gian của thuật toán. 
+    \item Độ phức tạp bộ nhớ: việc giải quyết các bài toán sử dụng máy tính yêu cầu bộ nhớ để lưu dữ liệu tạm thời hoặc kết quả cuối cùng trong khi thuật toán đang thực thi. Dung lượng bộ nhớ được yêu cầu bởi thuật toán để giải quyết bài toán được gọi là độ phức tạp bộ nhớ. 
+\end{itemize}
+\subsubsection{Ý kiến này là Đúng, bởi vì}
+Trên thực tế, với các thuật toán có độ phức tạp cao, việc để tìm ra hàm $T(n)$ chính xác là rất khó, và có thể gặp khó khăn khi so sánh 2 hàm số $T(n)$ với nhau. Do đó, người ta lựa chọn phương pháp so sánh tương đối, chỉ quan têm đến những giá trị $n$ lớn, $n$ càng lớn (tiến tới $\infty$) $\rightarrow$ So sánh tốc độ tăng (tỷ lệ tăng trưởng) của 2 hàm vì hàm nào có tốc độ tăng nhanh hơn thì luôn lớn hơn ở $\infty$ $\rightarrow$ Phân chia thành các bậc tăng trưởng "Order of growth", hàm có bậc tăng trưởng lớn hơn thì tăng nhanh hơn (phức tạp hơn) $\rightarrow$ Dễ so sánh
+\subsubsection{Cách sử dụng các ký hiệu tiệm cận khi nói về độ phức tạp thuật toán}
+\begin{itemize}
+    \item O (Big O): biểu diễn giới hạn trên của độ phức tạp thuật toán, nó cho biết thời gian chạy của thuật toán trong trường hợp tệ nhất đối với một input có kích thước n. Dễ dàng tìm thấy giới hạn trên của một thuật toán. Giới hạn trên.
+    \item $\Omega$ (Big $\Omega$): biểu diễn giới hạn dưới của thuật toán, nó cho biết thời gian chạy tốt nhất có thể của thuật toán đối với một input có kích thước n. Tuy nhiên nó lại không thực sự hữu ích và ít được sử dụng nhất trong cả 3. Giới hạn dưới.
+    \item $\Theta$ (Big $\Theta$): biểu diễn giới hạn một hàm từ trên xuống dưới, xác định hành vi tiệm cận chính xác. Nó cho biết thời gian chạy trung bình của thuật toán đối với một input có kích thước $n$.
+\end{itemize}
+
+

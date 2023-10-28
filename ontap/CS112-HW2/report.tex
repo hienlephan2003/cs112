@@ -1,0 +1,759 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[pdftex]{graphicx} %for embedding images
+\usepackage[utf8]{vietnam}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{commath, amsmath}
+\usepackage[ruled]{algorithm2e}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz,tkz-tab}
+\usetikzlibrary{matrix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,breakable,xparse,skins}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{changepage}
+\usepackage{setspace}
+\renewcommand\thesubsection{\alph{subsection})}
+\definecolor{bg}{gray}{0.95}
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+  breakable=true,
+  listing engine=minted,
+  listing only,
+  minted language=#2,
+  minted style=default,
+  minted options={%
+    linenos,
+    gobble=0,
+    breaklines=true,
+    breakafter=,,
+    fontsize=\small,
+    numbersep=8pt,
+    #1},
+  boxsep=0pt,
+  left skip=0pt,
+  right skip=0pt,
+  left=25pt,
+  right=0pt,
+  top=3pt,
+  bottom=3pt,
+  arc=5pt,
+  leftrule=0pt,
+  rightrule=0pt,
+  bottomrule=2pt,
+  toprule=2pt,
+  colback=bg,
+  colframe=orange!70,
+  enhanced,
+  overlay={%
+    \begin{tcbclipinterior}
+    \fill[orange!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+    \end{tcbclipinterior}},
+  #3}
+\begin{document}
+
+\pagenumbering{roman} %numbering before main content starts
+
+\begin{titlepage}
+
+\begin{center}
+
+\includegraphics[width=1\textwidth]{img/banner_uit.png}\\%\\[0.1in]
+\vspace{3em}%
+% Title
+\Large \textbf {BÀI TẬP MÔN\\PHÂN TÍCH VÀ THIẾT KẾ THUẬT TOÁN}\\%\\[0.5in]
+\vspace{1em}%
+\normalsize by \\%
+\vspace{1em}
+\textup{\small\bf {Hoàng Quang Khải - 21520952}\\
+{Nguyễn Nhật Minh - 21521135}\\
+{Lê Tiến Quyết - 21520428}\\
+{Lê Tuấn Vũ - 21521679}
+}
+
+
+ \vspace{1em}%
+{\bf KHOA KHOA HỌC MÁY TÍNH}\\[0.5in]
+
+\emph{Homework \#02: Phân tích thuật toán đệ quy\\ Trong quá trình phân tích thuật toán, việc thành lập phương trình T(n) là bước đầu tiên và quan trọng để đánh giá độ phức tạp của thuật toán. Trong trường hợp những thuật toán đệ quy, T(n) thường là những hệ thức truy hồi, vì thế qua bài tập này chúng ta biết được cách ứng dụng những phương pháp giải phù hợp để tìm được phương trình tổng quát T(n), từ đó làm tiền đề để đánh giá độ phức tạp của thuật toán sau này.}
+
+\vspace{1in}
+
+    
+% Submitted by
+\normalsize {\bf GV hướng dẫn:} \\
+
+Huỳnh Thị Thanh Thương\\
+\vspace{1em}
+
+\vfill
+
+% Bottom of the page
+
+TPHCM, March 23, 2023
+
+\end{center}
+
+\end{titlepage}
+
+
+\newpage
+\pagenumbering{arabic} %reset numbering to normal for the main content
+
+\onehalfspacing
+
+\section{Thành lập phương trình đệ quy}
+\subsection{Gửi ngân hàng 1000 USD, lãi suất 12\%/năm. Số tiền có được sau 30 năm là bao nhiêu?}
+Gọi số tiền có được năm thứ $n$ là $T(n),\quad n \geq 0$.\\
+Ta có:
+\begin{flalign*}
+T(0)&=1000\\
+T(1)&=1000\times 112\% =1120\\
+&\vdotswithin{=}\\
+T(n)&= 1.12\times T(n-1)
+\end{flalign*}
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          1000, \quad n = 0  \\
+          1.12\times T(n-1), \quad n > 0
+    \end{array}\right.
+\end{flalign*}
+\subsection{Cho thuật toán như sau}
+\begin{mintedbox}{C++}
+long Fibo(int n)
+{
+    if (n == 0 || n == 1)
+        return 1;
+    return Fibo(n-1) + Fibo(n-2);
+}
+\end{mintedbox}
+\noindent Với $n < 2$, ta có $T(n) = c_1$.\\
+Với $n \geq 2$, ta có $T(n) = T(n-1) + T(n-2) + c_2$.\\
+trong đó: $c_1, c_2$ là các chi phí tổng hợp.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n < 2  \\
+          T(n-1) + T(n-2) + c_2, \quad n \geq 2
+    \end{array}\right.
+\end{flalign*}
+\subsection{Cho thuật toán như sau}
+\begin{mintedbox}{C++}
+public int g(int n) {
+    if (n == 1)
+        return 2;
+    else
+        return 3 * g(n / 2) + g(n / 2) + 5;
+}
+\end{mintedbox}
+\noindent Với $n = 1$, ta có $T(n) = c_1$.\\
+Với $n > 1$, Ta có $T(n) = 2T\left(\frac{n}{2}\right)+c_2$.\\
+trong đó: $c_1, c_2$ là các chi phí tổng hợp.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n = 1  \\
+          2T\left(\frac{n}{2}\right)+c_2, \quad n > 1
+    \end{array}\right.
+\end{flalign*}
+\subsection{Cho thuật toán như sau}
+\begin{mintedbox}{C++}
+long xn(int n) {
+    if (n == 0) return 1;
+    long s = 0;
+    for (int i = 1; i <= n; i++)
+        s = s + i * i * xn(n - i);
+    return s;
+}
+\end{mintedbox}
+\noindent Với $n = 0$, ta có $T(n) = c_1$.\\
+Với $n > 0$, ta thấy hàm \texttt{xn(param)} được gọi lại $n$ lần.\\ 
+\indent Do đó: $T(n) = nT(n-1) + c_2$.\\
+trong đó: $c_1, c_2$ là các chi phí tổng hợp.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n = 0  \\
+          nT(n-1) + c_2, \quad n > 0
+    \end{array}\right.
+\end{flalign*}
+\subsection{Đánh giá độ phức tạp của hàm f}
+\begin{mintedbox}{C++}
+int f(int n) {
+    if (n == 1) return 2;
+    return pow(3, f(n / 2)) + 2 * log(f(n / 2)) - f(n / 2) + 1;
+}
+\end{mintedbox}
+\noindent Với $n = 1$, ta có $T(n) = c_1$.\\
+Với $n > 1$, ta thấy hàm \texttt{f(param)} được gọi lại 3 lần.\\
+\indent Do đó: $T(n) = 3T(n/2) + c_2$.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n = 1  \\
+          3T(n/2) + c_2, \quad n > 1
+    \end{array}\right.
+\end{flalign*}
+\subsection{Cho thuật toán sau}
+\begin{mintedbox}{python}
+def waste(n):
+    if n == 0:
+        return 0
+    for i in range(1, n + 1):
+        for j in range(1, i + 1):
+            print(i, j, n)
+    for i in [1, 2, 3]:
+        waste(n / 2)
+\end{mintedbox}
+\noindent Với $n = 0$, ta có $T(n) = c_1$.\\
+Với $n > 0$, ta thấy hàm \texttt{waste(param)} được gọi 3 lần.\\
+\indent Do đó: $T(n) = 3T(\frac{n}{2}) + \frac{n(n+1)}{2}+c_2$.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n = 0  \\
+          3T(\frac{n}{2}) + \frac{n(n+1)}{2}+c_2, \quad n > 0
+    \end{array}\right.
+\end{flalign*}
+\subsection{Cho thuật toán như sau}
+\begin{mintedbox}{C++}
+void Draw(int n) {
+    if (n < 1) return 0;
+    for (i = 1; i <= n; i++) 
+        for (j = 1; j <= n; j++)
+            print("*");
+    Draw(n-3);
+}
+\end{mintedbox}
+\noindent Với $n < 1$, ta có $T(n) = c_1$.\\
+Với $n \geq 1$, ta có $T(n) = T(n-3) + n^2 + c_2$.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n < 1  \\
+          T(n-3) + n^2 + c_2, \quad n \geq 1
+    \end{array}\right.
+\end{flalign*}
+\subsection{Thiết lập công thức truy hồi}
+\begin{mintedbox}{python}
+def Zeta(n):
+    if n == 0:
+        Zeta = 6
+    else:
+        k = Ret = 0
+        while k <= n - 1:
+            Ret += Zeta(k)
+            k += 1
+        Zeta = Ret
+\end{mintedbox}
+Gọi $T(n)$ là số phép cộng cần thực hiện khi gọi \texttt{Zeta(n)}.\\
+Với $n = 0$, ta có $T(n) = 0$.\\
+Với $n > 0$, ta có $T(n) = T(n-1) + 2$.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          0, \quad n = 0  \\
+          T(n-1) + 2, \quad n > 0
+    \end{array}\right.
+\end{flalign*}
+\subsection{Bài toán Tháp Hà Nội}
+\textit{Mã giả thuật toán giải bài toán Tháp Hà Nội}
+\begin{mintedbox}{C++}
+void move(int n, char a, char b, char c)
+{
+    if (n == 1)
+    {
+        // n == 1 thì chỉ có 1 đĩa chuyển thằng từ a qua c
+        cout << a << "->" << c; 
+        return;
+    }
+    move(n - 1, a, c, b); // chuyển n-1 đĩa từ a -> b
+    move(1, a, b, c);     // chuyển đĩa thứ n từ a -> c
+    move(n - 1, b, a, c); // chuyển n – 1 từ b -> c
+}
+\end{mintedbox}
+Gọi $T(n)$ là số lần chuyển n dĩa.\\
+Với $n = 0$, ta có $T(0) = 0$.\\
+Với $n = 1$, ta có $T(1) = 1$.\\
+Với $n > 1$, ta có $T(n) = 2\cdot T(n-1) + T(1) = 2\cdot T(n-1) + 1$.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          0, \quad n = 0  \\
+          2\cdot T(n-1) + 1, \quad n > 0
+    \end{array}\right.
+\end{flalign*}
+\subsection{Phân tích thuật toán đệ quy}
+\textit{Giải thuật chia để trị}
+\begin{align*}
+    &X\cdot Y = AC\cdot 10^n + \left[(A-B)(D-C) + AC+ BD\right] \cdot 10^{n/2} + BD
+\end{align*}
+Với $X, Y$ có 1 chữ số, nghĩa là $n = 1$, ta có $T(n) = 1 = c_1$.\\
+Với $n > 1$, giải thuật sẽ phải tính tích các giá trị $AC; (A-B)(D-C) + AC+ BD; BD$ với mỗi giá trị có số chữ số là $n/2$.\\
+Do đó ta có: $T(n) = 3\cdot T(n/2) + c_2$.\\
+Vậy phương trình đệ quy:
+\begin{flalign*}
+    T(n)=\left\{\begin{array}{l}
+          c_1, \quad n = 1  \\
+          3\cdot T(n/2) + c_2, \quad n > 1
+    \end{array}\right.
+\end{flalign*}
+\renewcommand\thesubsection{\arabic{subsection})}
+\section{\resizebox{\linewidth}{!}{Giải phương trình đệ quy bằng phương pháp truy hồi}}
+\subsection{$T(n)=T(n-1)+5,\quad T(1) = 0.$}
+\begin{flalign*}
+    T(n)&=T(n-1)+5\\
+        &=[T(n-2) + 5] + 5\\
+        &=[T(n-3) + 5] + 5 + 5\\
+        &\vdotswithin{=}\\
+        &= T(n-i) + 5i
+\end{flalign*}
+Quá trình kết thúc khi $n - i = 1 \Rightarrow i = n - 1$.\\
+Khi đó: $T(n) = T(1) + 5(n-1) = 5n -5$.
+\subsection{$T(n)=T(n-1)+n,\quad T(1) = 1.$}
+\begin{flalign*}
+    T(n)&=T(n-1)+n\\
+        &=[T(n-2) + n - 1] + n\\
+        &=[T(n-3) + n - 2] + n - 1 + n\\
+        &\vdotswithin{=}\\
+        &= T(n-i) + \sum_{k = n - i + 1}^n k\\
+        &= T(n-i) + \frac{i(2n - i + 1)}{2}
+\end{flalign*}
+Quá trình kết thúc khi $n - i = 1 \Rightarrow i = n - 1$.\\
+Khi đó: $\displaystyle T(n) = T(1) + \frac{(n-1)\left[2n-(n-1)+1\right]}{2} = \frac{n^2 +n}{2}$.
+\subsection{$T(n)=3T(n-1)+1,\quad T(1) = 4.$}
+\begin{flalign*}
+    T(n)&=3T(n-1)+1\\
+        &=3[3T(n-2) + 1] + 1\\
+        &=3^2T(n-2)+3+1\\
+        &=3^2[3T(n-3) + 1] + 3 + 1\\
+        &=3^3T(n-3)+3^2+3^1+3^0\\
+        &\vdotswithin{=}\\
+        &= 3^i\cdot T(n-i) + \sum_{k = 0}^{i-1}3^k\\
+        &= 3^i\cdot T(n-i) + \frac{3^i - 1}{2}
+\end{flalign*}
+Quá trình kết thúc khi $n - i = 1 \Rightarrow i = n - 1$.\\
+Khi đó: $\displaystyle T(n) = 3^{n-1}\cdot T(1) + \frac{3^{n-1} - 1}{2} = \frac{3^{n+1}-1}{2}$.
+\subsection{$T(n)=2T(n/2)+1,\quad T(1) = 1.$}
+\begin{flalign*}
+    T(n)&=2T(n/2)+1\\
+        &=2[2T(n/4) + 1] + 1\\
+        &=2^2[2T(n/8)+1]+2+1\\
+        &=2^3T(n/2^3)+2^2+2^1+2^0\\
+        &\vdotswithin{=}\\
+        &=2^i\cdot T(n/2^i)+\sum_{k=0}^{i-1}2^k\\
+        &=2^i\cdot T(n/2^i)+2^i-1
+\end{flalign*}
+Quá trình kết thúc khi $\displaystyle \frac{n}{2^i} = 1 \Rightarrow i = \log_2 n $.\\
+Khi đó: $\displaystyle T(n)=2^{\log_2 n}\cdot T(1) +2^{\log_2 n}-1=2n-1$.
+\subsection{$T(n)=2T(n/2)+n,\quad T(1) = 1.$}
+\begin{flalign*}
+    T(n)&=2T(n/2)+n\\
+        &=2[2T(n/4) + n/2] + n\\
+        &=2^2[2T(n/8)+n/4]+2n\\
+        &=2^3T(n/2^3)+3n\\
+        &\vdotswithin{=}\\
+        &=2^i\cdot T(n/2^i)+in\\
+        &=2^i\cdot T(n/2^i)+in
+\end{flalign*}
+Quá trình kết thúc khi $\displaystyle \frac{n}{2^i} = 1 \Rightarrow i = \log_2 n $.\\
+Khi đó: $\displaystyle T(n)=2^{\log_2 n}\cdot T(1)+n\log_2 n=n+n\log_2 n$.
+\subsection{$T(n)=2T(n/2)+n^2,\quad T(1) = 1.$}
+\begin{flalign*}
+\displaystyle
+    T(n)&=2T(n/2)+n^2\\
+        &=2[2T(n/4) + n^2/4] + n^2\\
+        &=2^2[2T(n/8)+n^2/16]+n^2/2+n^2\\
+        &=2^3T(n/2^3)+n^2/4+n^2/2+n^2\\
+        &\vdotswithin{=}\\
+        &=2^i\cdot T(n/2^i)+\sum_{k=0}^{i-1}\frac{n^2}{2^k}\\
+        &=2^i\cdot T(n/2^i)+2n^2\left(1-\frac{1}{2^i}\right)    
+\end{flalign*}
+Quá trình kết thúc khi $\displaystyle \frac{n}{2^i} = 1 \Rightarrow i = \log_2 n $.\\
+Khi đó: $\displaystyle T(n)=2^{\log_2 n}\cdot T(1)+2n^2\left(1-\frac{1}{n}\right)=2n^2-n$.
+\subsection{$T(n)=2T(n/2)+\log n,\quad T(1) = 1.$}
+\begin{flalign*}
+\displaystyle
+    T(n)&=2T(n/2)+\log n\\
+        &=2[2T(n/4) + \log n/2] + \log n\\
+        &=2^2[2T(n/8)+\log n/4]+ 2\log n/2+\log n\\
+        &=2^3T(n/2^3)+4\log n/4+ 2\log n/2+\log n\\
+        &\vdotswithin{=}\\
+        &=2^i\cdot T(n/2^i)+\log n \sum_{k=0}^{i-1}2^k-\sum_{k=0}^{i-1}2^k\log 2^k\\
+        &=2^i\cdot T(n/2^i)+\log n \sum_{k=0}^{i-1}2^k-\log 2\sum_{k=0}^{i-1}k2^k
+\end{flalign*}
+Ta có:
+$$\sum_{k=0}^{i-1} k2^k = (i-2)2^{i}+2$$
+Thay vào biểu thức trên ta có: $$T(n)=2^i\cdot T(n/2^i)+(2^i-1)\log n - \left[(i-2)2^i +2\right]\log 2  $$
+\noindent Quá trình kết thúc khi $\displaystyle \frac{n}{2^i} = 1 \Rightarrow i = \log_2 n $.\\
+Khi đó:
+\begin{flalign*}
+\displaystyle 
+T(n)&=2^{\log_2 n}\cdot T(1)+(2^{\log_2 n}-1)\log n - \left[(\log_2 n -2)2^{\log_2 n} +2\right]\log 2\\
+&=n-\log n + 2(n-1)\log 2 
+\end{flalign*}
+\section{\resizebox{\linewidth}{!}{Giải phương trình đệ quy bằng phương pháp truy hồi}}
+Với $T(1)=1$
+\subsection{$T(n)=3T(n/2)+n^2$}
+\begin{flalign*}
+    T(n)&=3T(n/2)+n^2\\
+        &=3\left[3T(n/4)+n^2/4\right]+n^2\\
+        &=3^2[3T(n/8)+n^2/16]+3n^2/4+n^2\\
+        &=3^3[3T(n/16)+n^2/64]+9n^2/16+3n^2/4+n^2\\
+        &=3^4T(n/16)+27n^2/64+9n^2/16+3n^2/4+n^2\\
+        &\vdotswithin{=}\\
+        &=3^i\cdot T(n/2^i)+4n^2\left[1-(3/4)^i\right]
+\end{flalign*}
+\noindent Quá trình kết thúc khi $\displaystyle \frac{n}{2^i} = 1 \Rightarrow i = \log_2 n $.\\
+Khi đó:
+\begin{flalign*}
+\displaystyle 
+T(n)&=3^{\log_2 n}\cdot T(1) + 4n^2\left[1-(3/4)^{\log_2 n}\right]\\
+&=4n^2 - 3^{\log_2 n + 1}
+\end{flalign*}
+\subsection{$T(n) = 8T(n/2) + n^3$}
+\begin{flalign*}
+    T(n)&= 8T(n/2) + n^3 \\
+        &= 8[8T(n/4) + n^3/8] + n^3 \\
+        &= 64[8T(n/8) + n^3/64] + 2n^3\\
+        &\vdotswithin{=}\\
+        &= 8^i\cdot T(n/2^i) + in^3
+\end{flalign*}
+\noindent Quá trình kết thúc khi $\displaystyle \frac{n}{2^i} = 1 \Rightarrow i = \log_2 n $.\\
+Khi đó:
+\begin{flalign*}
+\displaystyle 
+T(n)&=8^{\log_2 n}\cdot T(1) + n^3\log_2 n\\
+&=n^3+ n^3\log_2 n
+\end{flalign*}
+\subsection{$T(n) = 4T(n/3) + n $}
+\begin{flalign*}
+    T(n)&= 4T(n/3) + n \\
+        &= 4[4T(n/9) + n/3] + n \\
+        &= 4^i\cdot T(n/3^i) + \frac{(4/3)^i -1}{4/3 -1}\\
+        &\vdotswithin{=}\\
+        &= 4^i\cdot T(n/3^i) + 3n [(4/3)^i - 1]
+\end{flalign*}
+\noindent Quá trình kết thúc khi $\displaystyle \frac{n}{3^i} = 1 \Rightarrow i = \log_3 n $.\\
+Khi đó:
+\begin{flalign*}
+\displaystyle 
+T(n)&=4^{\log_3 n}\cdot T(1) + 3n [(4/3)^{\log_3 n} - 1]\\
+&=4^{log_3 n +1}-3n
+\end{flalign*}
+\subsection{$T(n) = 9T(n/3) + n^2 $}
+\begin{flalign*}
+    T(n)&= 9T(n/3) + n^2 \\ 
+        &= 9(9T(n/9) + n^2/9) + n^2 \\
+        &= 81(9T(n/27) + n^2/81) + 2n^2 \\
+        &\vdotswithin{=}\\
+        &= 9^i\cdot T(n/3^i) + in^2
+\end{flalign*}
+\noindent Quá trình kết thúc khi $\displaystyle \frac{n}{3^i} = 1 \Rightarrow i = \log_3 n $.\\
+Khi đó:
+\begin{flalign*}
+\displaystyle 
+T(n)&=9^{\log_3 n}\cdot T(1) + n^2\log_3 n\\
+&=n^2 + n^2\log_3 n
+\end{flalign*}
+\subsection{$T(n) = 2T(\sqrt{n}) + 1, \quad T(2) = 0$}
+\begin{flalign*}
+    T(n)&=2T(n^{1/2})+1\\
+        &=2[2T(n^{1/4}) + 1] + 1\\
+        &= 2^2T(n^{1/2^2})+2+1\\
+        &\vdotswithin{=}\\
+        &=2^i\cdot T(n^{1/2^i}) + 2^i - 1
+\end{flalign*}
+\noindent Quá trình kết thúc khi: $$ n^{\frac{1}{2^i}} = 2 \Rightarrow \frac{1}{2^i} = \frac{1}{\log_2 n} \Leftrightarrow i = \log_2 \left(\log_2 n\right)$$.\\
+Khi đó:
+\begin{flalign*}
+\displaystyle 
+T(n)&=2^{\log_2 \left(\log_2 n\right)}\cdot T(2) + 2^{\log_2 \left(\log_2 n\right)} -1\\
+&=\log_2 n - 1
+\end{flalign*}
+\section{\resizebox{\linewidth}{!}{Giải phương trình đệ quy dùng phương trình đặc trưng}}
+\renewcommand\thesubsection{\alph{subsection})}
+\subsection{$T(n) = 4T(n-1) - 3T(n-2),\quad T(0) = 1; T(1) = 2$}
+Đặt: $x^n = T(n)$\\
+Phương trình trên trở thành:
+\begin{flalign*}
+    x^n - 4x^{n-1} + 3x^{n-2} &=0&&\\
+    x^{n-2}(x^2 - 4x + 3) &=0&& \\
+    \left[
+    \begin{array}{l}
+         x^{n-2} = 0\\
+         x^2 - 4x + 3 = 0 \quad \text{(phương trình đặc trưng)}  
+    \end{array}
+    \right.
+\end{flalign*}
+Giải phương trình đặc trưng:
+\begin{flalign*}
+    x^2-4x+3 &= 0\\
+    \begin{cases}
+    x_1 = 1\\
+    x_2 = 3\\
+    \end{cases}
+\end{flalign*}
+$T(n)$  có dạng: $$c_1x_1^n + c_2x_2^n = c_2 3^n + c_1$$
+Theo đề ta có:
+$
+\displaystyle
+\begin{cases}
+    T(0) = c_1 + c_2 = 1 \\
+    T(1) = c_1 + 3c_2 = 2
+\end{cases}
+\Leftrightarrow
+c_1 = c_2 = \frac{1}{2} 
+$\\
+Vậy:
+$$\displaystyle T(n) = \frac{3^n}{2} + \frac{1}{2}$$
+\subsection{\resizebox{\linewidth}{!}{$T(n) = 4T(n-1) -5T(n-2) + 2T(n-3),\quad T(0) = 0; T(1) = 1; T(2) = 2$}}
+Đặt: $x^n = T(n)$\\
+Phương trình trên trở thành:
+\begin{flalign*}
+    x^n - 4x^{n-1} +5x^{n-2} - 2x^{n-3} &=0&&\\
+    x^{n-3}(x^3 - 4x^2 + 5x-2) &=0&& \\
+    \left[
+    \begin{array}{l}
+         x^{n-3} = 0\\
+         x^3 - 4x^2 + 5x-2 = 0 \quad \text{(phương trình đặc trưng)}
+    \end{array}
+    \right.
+\end{flalign*}
+Giải phương trình đặc trưng:
+\begin{flalign*}
+    x^3 - 4x^2 + 5x-2 &= 0\\
+    \begin{cases}
+    x_1 = 1 \quad (n_0 \text{ bội 2})\\
+    x_2 = 2\\
+    \end{cases}
+\end{flalign*}
+$T(n)$  có dạng: $$c_1x_1^n + c_2nx_1^n + c_3x_2^n = c_3 2^n + nc_2 + c_1$$
+Theo đề ta có:
+$
+\displaystyle
+\begin{cases}
+    T(0) = c_1 + c_3 &= 0 \\
+    T(1) = c_1 + c_2 + 2c_3 &= 1 \\
+    T(2) = c_1 + 2c_2 + 4c_3 &= 2
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    c_1 = c_3 = 0\\
+    c_2 = 1
+\end{cases} 
+$\\
+Vậy:
+$$\displaystyle T(n) = n$$
+\subsection{$T(n) = T(n-1) +T(n-2), \quad T(0) = 1; T(1) = 1$}
+Đặt: $x^n = T(n)$\\
+Phương trình trên trở thành:
+\begin{flalign*}
+    x^n - x^{n-1} - x^{n-2} &=0&&\\
+    x^{n-2}(x^2-x-1)&=0&& \\
+    \left[
+    \begin{array}{l}
+         x^{n-2} = 0\\
+         x^2 - x -1 = 0 \quad \text{(phương trình đặc trưng)}
+    \end{array}
+    \right.
+\end{flalign*}
+Giải phương trình đặc trưng:
+\begin{flalign*}
+    x^2 - x -1 = 0\\
+    \begin{cases}
+    x_1 = \frac{1+\sqrt{5}}{2}\\
+    x_2 = \frac{1-\sqrt{5}}{2}\\
+    \end{cases}
+\end{flalign*}
+$T(n)$  có dạng: $$c_1x_1^n + c_2x_2^n = c_1\left(\frac{1+\sqrt{5}}{2}\right)^n + c_2\left(\frac{1-\sqrt{5}}{2}\right)^n$$
+Theo đề ta có:
+$
+\displaystyle
+\begin{cases}
+    T(0) = c_1 + c_2 &= 1 \\
+    T(1) = c_1\left(\frac{1+\sqrt{5}}{2}\right) + c_2\left(\frac{1-\sqrt{5}}{2}\right)&= 1 \\
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    c_1 = \frac{5+\sqrt{5}}{10} \\
+    c_2 = \frac{5-\sqrt{5}}{10}
+\end{cases} 
+$\\
+Vậy:
+$$\displaystyle T(n)=\frac{5+\sqrt{5}}{10}\left(\frac{1+\sqrt{5}}{2}\right)^n + \frac{5-\sqrt{5}}{10}\left(\frac{1-\sqrt{5}}{2}\right)^n $$
+\section{\resizebox{\linewidth}{!}{Giải phương trình đệ quy dùng phương pháp hàm sinh}}
+\subsection{$T(n) = \begin{cases}
+    c_1, \quad n = 0  \\
+    T(n-1) + c_2, \quad n > 0 
+\end{cases}$}
+Hàm sinh $\left\{T(n)\right\}_{n=0}^\infty$ có dạng:
+\begin{flalign*}
+    f(x) &= \sum_{n=0}^{\infty}T(n)x^n  \\
+         &= c_1 + \sum_{n=1}^\infty T(n-1)x^n + \sum_{n=1}^\infty c_2 x^n \quad \text{(tách thành hai dãy)}\\
+&= c_1 + x\sum_{n=0}^\infty T(n)x^n + c_2 \sum_{n=1}^\infty x^n \\
+&= c_1 + xf(x) + c_2\frac{x}{1-x} \quad \text{(biến đổi lại thành hàm sinh)}\\
+&= c_1 + \frac{c_2x}{1-x} + xf(x)
+\end{flalign*}
+ \textit{ Tham khảo cách trình bày bởi ChatGPT}.\par
+Ta có: 
+\begin{flalign*}
+    f(x)&= c_1 + xf(x) + c_2\frac{x}{1-x} \\
+    f(x)&= \frac{c_1 + \frac{c_2x}{1-x}}{1-x} \\
+        &= \frac{c_1}{1-x} + \frac{c_2x}{(1-x)^2} \\
+        &= c_1 \sum_{n=0}^\infty x^n + c_2\sum_{n=0}^\infty nx^n \\
+        &= c_1 + c_2 \sum_{n=0}^\infty nx^n
+\end{flalign*}
+\indent Suy ra:$$T(n) = c_1 + c_2n = c_2n + c_1 $$
+\subsection{$T(n) = \begin{cases}
+    1, \quad n = 0  \\
+    2, \quad n = 1  \\
+    7T(n-1)-12T(n-2), \quad n \geq 2 
+\end{cases}$}
+Hàm sinh $\left\{T(n)\right\}_{n=0}^\infty$ có dạng:
+\begin{flalign*}
+    f(x) &= \sum_{n=0}^{\infty}T(n)x^n  \\
+         &= 7\sum_{n=2}^{\infty}T(n-1)x^n- 12\sum_{n=2}^{\infty}T(n-2)x^n + 2x + 1\\
+         &= 7x\sum_{n=1}^{\infty}T(n)x^n -12x^2\sum_{n=0}^{\infty}T(n)x^n + 2x + 1\\
+         &= 7xf(x) -7x - 12x^2f(x) + 2x + 1\\
+         &= 7xf(x) - 12x^2f(x) -5x + 1
+\end{flalign*}
+\indent Ta có: 
+\begin{flalign*}
+    f(x)&= 7xf(x) - 12x^2f(x) + 2x + 1 \\
+    f(x)&= \frac{-5x+1}{1-7x+12x^2} \\
+        &= \frac{-5x+1}{(1-3x)(1-4x)}\\
+        &= \frac{2}{1-3x}-\frac{1}{1-4x}\\
+        &= 2\sum_{n=0}^{\infty}(3x)^n-\sum_{n=0}^{\infty}(4x)^n\\
+        &= \sum_{n=0}^{\infty}\left(2\cdot3^n-4^n\right)x^n
+\end{flalign*}
+\indent Suy ra:$$T(n) = 2\cdot3^n-4^n$$
+\subsection{$\begin{cases}
+    T(n+1) = T(n) + 2(n+2),\quad n \geq 0 \\
+    T(0) = 3
+\end{cases}$}
+Chuẩn hoá phương trình: Đặt $n' = n + 1$
+$$T(n') = T(n) = \begin{cases}
+    3, \quad n = 0 \\
+    T(n-1) + 2(n+1), \quad n \geq 1 \\
+\end{cases}$$
+Hàm sinh $\left\{T(n)\right\}_{n=0}^\infty$ có dạng:
+\begin{flalign*}
+    f(x) &= \sum_{n=0}^{\infty}T(n)x^n  \\
+         &= \sum_{n=2}^{\infty}T(n-1)x^n + \sum_{n=2}^{\infty}2(n+1)x^n + 7x + 3\\
+         &= x\sum_{n=1}^{\infty}T(n)x^n + 2\sum_{n=2}^{\infty}(n+1)x^n + 7x + 3\\
+         &=xf(x)-3x + \frac{2x}{(1-x)^2} - 2(1 + 2x) + 7x + 3 \\
+         &=xf(x) + \frac{2x}{(1-x)^2} + 1
+\end{flalign*}
+\indent Ta có: 
+\begin{flalign*}
+    f(x)&= xf(x) + \frac{2x}{(1-x)^2} + 1 \\
+    f(x)&= \frac{\frac{2x}{(1-x)^2} + 1}{1-x} \\
+        &= \frac{2x}{(1-x)^3}+\frac{1}{1-x}
+\end{flalign*}
+\indent Xét đẳng thức: $$\sum_{n=0}^\infty(n+1)x^n=\frac{1}{(1-x)^2}$$
+Đạo hàm 2 vế, ta được:
+$$\sum_{n=1}^\infty n(n+1)x^{n-1}=\frac{2(1-x)}{(1-x)^4}$$
+$$\Leftrightarrow \sum_{n=0}^\infty (n+1)(n+2)x^{n}=\frac{2}{(1-x)^3}$$
+Thay vào $f(x)$, ta có:
+$$f(x) =\sum_{n=0}^\infty (n+1)(n+2)x^{n} + \sum_{n=0}^{\infty}x^n$$
+\indent Suy ra:$$T(n) = (n+1)(n+2)+1=n^2+3n+3$$
+\renewcommand\thesubsection{\roman{subsection})}
+\section{\resizebox{\linewidth}{!}{Giải phương trình đệ quy bằng phương pháp đoán nghiệm}}
+\textit{Đề bài:} Cho phương trình đệ quy \\
+$$T(n) = \begin{cases}
+    c_1, \quad n = 1\\
+    4T(n/2) + n, \quad n \geq 2
+\end{cases}$$
+\subsection{Đoán nghiệm: $f(n) = an^3$}
+Dùng quy nạp chứng minh: $T(n) \leq f(n), \forall n$.\\
+Để $T(1) \leq f(1)$, ta chọn $a$ sao cho $c_1 \leq a$.\\
+Giả sử: $T(k) \leq f(k), \forall k < n$.\\
+Điều này có nghĩa: $4T(\frac{k}{2}) + k \leq f(\frac{k}{2})$.\\
+Cần CM: $T(k) \leq f(k)$ tại $k = n$:
+\begin{flalign*}
+T(n) = 4T(n/2) + n &\leq 4f(n/2) +n  \\
+T(n) = 4T(n/2) + n &\leq \frac{an^3}{2} +n\\
+ \textbf{Để } T(n) \leq f(n) \textbf{ thì: }\frac{an^3}{2} +n &\leq f(n) = an^3 \\
+ \Leftrightarrow a \geq \frac{2}{n^2} \\
+\Leftrightarrow a \geq 2 \geq \frac{2}{n^2}  \quad (n \geq 1)
+\end{flalign*}
+Để tìm $a$, ta giải hệ:$$\begin{cases}
+    a \geq 2 \\
+    a \geq c_1 \quad (c_1 \geq 0)
+\end{cases}
+$$
+Suy ra :
+$$ \exists a, \forall n \geq 1: T(n) \leq \frac{an^3}{2} + n \leq an^3 = f(n)$$ \\
+Chọn $a = c_1 + 2  \Rightarrow T(n) \leq (c_1+2)n^3$\\
+Vậy: Đoán nghiệm thành công.
+\subsection{Đoán nghiệm: $f(n) = an^2$}
+Dùng quy nạp chứng minh: $T(n) \leq f(n), \forall n$.\\
+Để $T(1) \leq f(1)$, ta chọn $a$ sao cho $c_1 \leq a$.\\
+Giả sử: $T(k) \leq f(k), \forall k < n$.\\
+Điều này có nghĩa: $4T(\frac{k}{2}) + k \leq f(\frac{k}{2})$.\\
+Cần CM: $T(k) \leq f(k)$ tại $k = n$:
+\begin{flalign*}
+T(n) = 4T(n/2) + n &\leq 4f(n/2) +n  \\
+T(n) = 4T(n/2) + n &\leq an^2 +n\\
+ \textbf{Để } T(n) \leq f(n) \textbf{ thì: } an^2 +n &\leq f(n) =  an^2 \\
+ \Leftrightarrow n \leq 0 \quad (n \geq 1)\\
+\Rightarrow \text{Không tồn tại } a  \text{ thoả mãn}
+\end{flalign*}
+Vậy: Đoán nghiệm thất bại.
+\subsection{Đoán nghiệm: $f(n) = an^2-bn$}
+Dùng quy nạp chứng minh: $T(n) \leq f(n), \forall n$.\\
+Để $T(1) \leq f(1)$, ta chọn $a$ sao cho $c_1 \leq a - b$.\\
+Giả sử: $T(k) \leq f(k), \forall k < n$.\\
+Điều này có nghĩa: $4T(\frac{k}{2}) + k \leq f(\frac{k}{2})$.\\
+Cần CM: $T(k) \leq f(k)$ tại $k = n$:
+\begin{flalign*}
+T(n) = 4T(n/2) + n &\leq 4f(n/2) +n  \\
+T(n) = 4T(n/2) + n &\leq an^2-2bn +n\\
+T(n) = 4T(n/2) + n &\leq f(n) - bn +n\\
+ \textbf{Để } T(n) \leq f(n) \textbf{ thì: } -bn +n \leq 0 \\
+ \Leftrightarrow b \geq 1
+\end{flalign*}
+Để tìm $a, b$, ta giải hệ:$$\begin{cases}
+    a - b \geq c_1 \\
+    b \geq 1
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+    a \geq c_1 + b \\
+    b \geq 1
+\end{cases}
+$$
+Chọn $b = 1;a = c_1 + 1 \Rightarrow T(n) \leq (c_1+1)n^2 - n$\\
+Vậy: Đoán nghiệm thành công.
+\section{\resizebox{\linewidth}{!}{Giải phương trình đệ quy bằng phương pháp đoán nghiệm}}
+$$T(n) = \begin{cases}
+    1, \quad n \leq 5\\
+    T(n/2) + T(n/4) + n, \quad n \geq 6
+\end{cases}$$
+\begin{center}
+    Gợi ý đoán: $T(n) = O(n)$
+\end{center}
+\textbf{Đoán nghiệm} $f(n) = an$.\\
+Dùng quy nạp chứng minh: $T(n) \leq f(n), \forall n$.\\
+Với $n = 1$, cần CM: $T(1) \leq f(1) \Rightarrow 1 \leq a$\par 
+Để $T(1) \leq f(1)$ ta chọn $a \geq 1$.\\
+\textit{Giả sử: } $T(k) \leq f(k), \forall k < n$.\\
+Điều này có nghĩa: $T\left(\frac{k}{2}\right) +T\left(\frac{k}{4}\right) + k \leq f\left(\frac{k}{2}\right)$.\\
+Cần CM: $T(k) \leq f(k)$ với $k = n$:
+\begin{flalign*}
+T(n) = T\left(\frac{n}{2}\right) +T\left(\frac{n}{4}\right) + n &\leq f\left(\frac{n}{2}\right) + f\left(\frac{n}{4}\right) + n  \\
+T(n) = T\left(\frac{n}{2}\right) +T\left(\frac{n}{4}\right) + n &\leq \frac{an}{2} + \frac{an}{4} + n  \\
+T(n) = T\left(\frac{n}{2}\right) +T\left(\frac{n}{4}\right) + n &\leq f(n) - \frac{an}{4} + n  \\
+ \textbf{Để } T(n) \leq f(n) \textbf{ thì: } - \frac{an}{4} + n \leq 0 \\
+ \Leftrightarrow a \geq 4
+\end{flalign*}
+Chọn $a = 4 \Rightarrow T(n) \leq f(n) = 4n$\\
+\textbf{Vậy}: $T(n) = O(n)$
+
+\end{document}

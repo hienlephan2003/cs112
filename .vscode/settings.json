@@ -1,0 +1,18 @@
+{
+  "files.associations": {
+    "utility": "cpp",
+    "deque": "cpp",
+    "initializer_list": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp",
+    "queue": "cpp",
+    "map": "cpp",
+    "set": "cpp",
+    "stack": "cpp",
+    "type_traits": "cpp"
+  }
+}
